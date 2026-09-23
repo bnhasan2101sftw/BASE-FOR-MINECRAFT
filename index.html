@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BASE | Minecraft Java Takımı</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg-dark: #0a0b10;
+      --card-bg: rgba(18, 22, 36, 0.75);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --primary: #3b82f6;
+      --primary-glow: rgba(59, 130, 246, 0.4);
+      --builder-gold: #f59e0b;
+      --builder-glow: rgba(245, 158, 11, 0.4);
+      --pvp-red: #ef4444;
+      --pvp-glow: rgba(239, 68, 68, 0.4);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Rajdhani', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 60%),
+        radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.1) 0%, transparent 50%);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+      position: relative;
+    }
+
+    .logo-glow {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 4rem;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(59, 130, 246, 0.8),
+                   0 0 20px rgba(59, 130, 246, 0.6),
+                   0 0 40px rgba(59, 130, 246, 0.4);
+      letter-spacing: 4px;
+      margin-bottom: 15px;
+    }
+
+    .badge-mc {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.4);
+      color: #4ade80;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+    }
+
+    .players-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 25px;
+      margin-bottom: 50px;
+    }
+
+    .player-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 25px 20px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .player-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .player-card.builder {
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+    .player-card.builder:hover {
+      border-color: var(--builder-gold);
+      box-shadow: 0 10px 25px var(--builder-glow);
+    }
+
+    .player-card.pvp {
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+    .player-card.pvp:hover {
+      border-color: var(--pvp-red);
+      box-shadow: 0 10px 25px var(--pvp-glow);
+    }
+
+    .avatar-wrapper {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 15px;
+      position: relative;
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      image-rendering: pixelated;
+      border-radius: 12px;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      background: #1a1d28;
+    }
+
+    .player-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .role-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+    }
+
+    .role-badge.builder {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .role-badge.pvp {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+
+    .server-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .ip-box {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 15px;
+    }
+
+    .ip-text {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 1.1rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .copy-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: #2563eb;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1 class="logo-glow">BASE</h1>
+      <div class="badge-mc">
+        <i class="fa-solid fa-gamepad"></i> OYUN: MINECRAFT / JAVA
+      </div>
+    </header>
+
+    <main>
+      <div class="players-grid">
+        
+        <!-- Bnhasan3461 -->
+        <div class="player-card builder">
+          <div class="avatar-wrapper">
+            <img src="bnhasan3461.png" alt="Bnhasan3461" class="avatar-img">
+          </div>
+          <div class="player-name">Bnhasan3461</div>
+          <span class="role-badge builder"><i class="fa-solid fa-hammer"></i> Builder</span>
+        </div>
+
+        <!-- Asipotimo2014 -->
+        <div class="player-card pvp">
+          <div class="avatar-wrapper">
+            <img src="asipotimo2014.png" alt="Asipotimo2014" class="avatar-img">
+          </div>
+          <div class="player-name">Asipotimo2014</div>
+          <span class="role-badge pvp"><i class="fa-solid fa-swords"></i> PvP Master</span>
+        </div>
+
+        <!-- Syhtix -->
+        <div class="player-card">
+          <div class="avatar-wrapper">
+            <img src="syhtix.png" alt="Syhtix" class="avatar-img">
+          </div>
+          <div class="player-name">Syhtix</div>
+          <span class="role-badge">Member</span>
+        </div>
+
+        <!-- emoyuso011 -->
+        <div class="player-card">
+          <div class="avatar-wrapper">
+            <img src="emoyuso011.png" alt="emoyuso011" class="avatar-img">
+          </div>
+          <div class="player-name">emoyuso011</div>
+          <span class="role-badge">Member</span>
+        </div>
+
+      </div>
+
+      <div class="server-box">
+        <h3><i class="fa-solid fa-server"></i> Sunucu Katılım Bilgisi</h3>
+        <p style="color: var(--text-muted); margin-top: 5px;">BASE ekibine katılmak veya aynı sunucuda oynamak için IP adresi:</p>
+        <div class="ip-box">
+          <span class="ip-text" id="ip">play.base-mc.com</span>
+          <button class="copy-btn" onclick="copyIP()"><i class="fa-solid fa-copy"></i> Kopyala</button>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 BASE Team - Tüm Hakları Saklıdır.</p>
+    </footer>
+  </div>
+
+  <script>
+    function copyIP() {
+      const ip = document.getElementById('ip').innerText;
+      navigator.clipboard.writeText(ip);
+      alert('Sunucu IP adresi kopyalandı: ' + ip);
+    }
+  </script>
+</body>
+</html>
